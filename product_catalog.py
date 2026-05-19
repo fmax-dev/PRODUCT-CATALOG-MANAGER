@@ -57,6 +57,14 @@ def search_product(catalog):
         print(f"\n❌ '{query.capitalize()}' not found.")
     
 
+def view_product(catalog):
+    """Allow users to view existing products"""
+    if not catalog:
+        print("\nProduct catalog is empty")
+    else:
+        print("\n--- ALL PRODUCTS ---\n")
+        for index, (product_name, price) in enumerate(catalog.items(), start=1):
+            print(f"    {index}. {product_name.capitalize()}: ${price}")
 
 
 def run_product_catalog():
@@ -69,6 +77,7 @@ def run_product_catalog():
         print("\nAvailable options:\n")
         print("  1. Add Product")
         print("  2. Search Product")
+        print("  3. View Product")
 
         user_choice = input("\nSelect an option: ").strip()
 
@@ -76,6 +85,8 @@ def run_product_catalog():
             add_product(catalog)
         elif user_choice == "2":
             search_product(catalog)
+        elif user_choice == "3":
+            view_product(catalog)
             break
         else:
             print("\nInvalid choice. Please try again.")
