@@ -49,12 +49,12 @@ def add_product(catalog):
 
 def search_product(catalog):
     """Allow users to search products"""
-    query = normalize(input("\nEnter product name: "))
+    search_query = normalize(input("\nEnter product name: "))
 
-    if query in catalog:
-        print(f"\n📦 {query.capitalize()}: ${catalog[query]}")
+    if search_query in catalog:
+        print(f"\n📦 {search_query.capitalize()}: ${catalog[search_query]}")
     else:
-        print(f"\n❌ '{query.capitalize()}' not found.")
+        print(f"\n❌ '{search_query.capitalize()}' not found.")
     
 
 def view_product(catalog):
@@ -65,6 +65,19 @@ def view_product(catalog):
         print("\n--- ALL PRODUCTS ---\n")
         for index, (product_name, price) in enumerate(catalog.items(), start=1):
             print(f"    {index}. {product_name.capitalize()}: ${price}")
+
+
+def delete_product(catalog):
+    """Allow users to delete existing products"""
+
+    delete_query = normalize(input("\nEnter product name: "))
+
+    if delete_query in catalog:
+        del catalog[delete_query]
+        save_products(catalog)
+        print(f"\n✅ '{delete_query.capitalize()}' deleted successfully!")
+    else:
+        print(f"\n❌ '{delete_query.capitalize()}' not found")
 
 
 def run_product_catalog():
@@ -78,15 +91,22 @@ def run_product_catalog():
         print("  1. Add Product")
         print("  2. Search Product")
         print("  3. View Product")
+        print("  4. Delete Product")
+        print("  5. Exit")
 
         user_choice = input("\nSelect an option: ").strip()
 
+        # ROUTING LOGIC
         if user_choice == "1":
             add_product(catalog)
         elif user_choice == "2":
             search_product(catalog)
         elif user_choice == "3":
             view_product(catalog)
+        elif user_choice == "4":
+            delete_product(catalog)
+        elif user_choice == "5":
+            print("\nGoodbye!")
             break
         else:
             print("\nInvalid choice. Please try again.")
